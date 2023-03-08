@@ -1,6 +1,6 @@
 import React from 'react'
 import { FileUploader } from 'react-drag-drop-files'
-export default function Upload({ uploadImage, uploadDraggedImg }) {
+export default function Upload({ uploadImage, uploadDraggedImg, invalidFile }) {
 
     return (
         <>
@@ -12,13 +12,6 @@ export default function Upload({ uploadImage, uploadDraggedImg }) {
                     File should be Jpeg, Png,...
                 </div>
 
-                {/* <div className='w-48 h-48 bg-[#EAEAEF] shadow-sm rounded-lg flex flex-col justify-center items-center border-2 border-dashed border-black'>
-                <img src="cloud_upload.svg" alt="" className='h-[80%]' />
-                <div className='text-[11px]'>
-                    Drag & Drop your image here
-                </div>
-            </div> */}
-
                 <FileUploader classes="file-uploader" handleChange={uploadDraggedImg} name="image" types={["JPG", "PNG", "GIF"]} />
 
                 <div>
@@ -28,7 +21,12 @@ export default function Upload({ uploadImage, uploadDraggedImg }) {
                 <div className='w-52'>
                     <input type="file" name='image' accept='image/*' onChange={(e) => uploadImage(e)} />
                 </div>
+
+                <div className={`p-2 text-center text-red-600 w-[100%] rounded-md bg-red-200 ${invalidFile ? 'opacity-100' : 'opacity-0'} transition-all duration-300 ease-linear`}>
+                    File should be Jpeg, Png,...
+                </div>
             </div>
+
         </>
 
     )

@@ -1,6 +1,6 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Footer from './components/Footer';
 import Upload from './components/Upload';
@@ -12,16 +12,25 @@ import storage from './firebase_config';
 function App() {
   // 0 - not uploaded 1 - inProgress 2 - upLoaded
   const [status, setStatus] = useState(0);
-  const [downloadUrl, setdownloadUrl] = useState(null)
+  const [downloadUrl, setdownloadUrl] = useState(null);
+  const [invalidFile, setInvalidFile] = useState(false);
+  useEffect(() => {
+    if (invalidFile) {
+      setTimeout(() => {
+        setInvalidFile(false)
+      }, 3000);
+    }
+  }, [invalidFile])
+
   let uploadImage = (event) => {
     setStatus(1);
     const image = event.target.files[0];
     let imgStr = image.name;
     if (!['.jpeg', '.jpg', '.png'].some((imgExt) => imgStr.endsWith(imgExt))) {
       // validate image
-      alert('file extension should be .jpeg, .jpg and .png');
       event.target.value = null;
       setStatus(0);
+      setInvalidFile(true);
       return false;
     }
 
@@ -58,8 +67,8 @@ function App() {
   }
   if (status === 0)
     return (
-      <div className="h-screen flex justify-center items-center">
-        <Upload uploadImage={uploadImage} uploadDraggedImg={uploadDraggedImg} />
+      <div className="h-screen flex flex-col justify-center items-center">
+        <Upload uploadImage={uploadImage} uploadDraggedImg={uploadDraggedImg} invalidFile={invalidFile} />
         <Footer />
       </div>
     );
