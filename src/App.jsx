@@ -2,6 +2,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import './App.css';
+import Footer from './components/Footer';
 import Upload from './components/Upload';
 import Uploaded from './components/Uploaded';
 import Uploading from './components/Uploading';
@@ -39,7 +40,7 @@ function App() {
       });
 
   }
-  
+
   let uploadDraggedImg = (image) => {
     setStatus(1);
     // Create a storage reference from our storage service
@@ -59,18 +60,21 @@ function App() {
     return (
       <div className="h-screen flex justify-center items-center">
         <Upload uploadImage={uploadImage} uploadDraggedImg={uploadDraggedImg} />
+        <Footer />
       </div>
     );
   else if (status === 1)
     return (
       <div className="h-screen flex justify-center items-center">
         <Uploading />
+        <Footer />
       </div>
     )
   else
     return (
       <div className="h-screen flex justify-center items-center">
         <Uploaded downloadUrl={downloadUrl} />
+        <Footer />
       </div>
     )
 }
