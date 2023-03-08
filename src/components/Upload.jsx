@@ -5,7 +5,7 @@ export default function Upload({ uploadImage, uploadDraggedImg, invalidFile }) {
     return (
         <>
             <div className='flex flex-col gap-4 items-center bg-white p-5 shadow-md rounded-md'>
-                <div className='text-xl'>
+                <div className='text-2xl'>
                     Upload your image
                 </div>
                 <div className='text-[11px] text-[#828282]'>
